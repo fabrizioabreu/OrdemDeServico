@@ -8,8 +8,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fabrizio.os.domain.Pessoa;
 import com.fabrizio.os.domain.Tecnico;
 import com.fabrizio.os.dtos.TecnicoDTO;
+import com.fabrizio.os.repositories.PessoaRepository;
 import com.fabrizio.os.repositories.TecnicoRepository;
 import com.fabrizio.os.services.exceptions.DataIntegratyViolationException;
 import com.fabrizio.os.services.exceptions.ObjectNotFoundException;
@@ -19,6 +21,9 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository repository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
@@ -61,8 +66,8 @@ public class TecnicoService {
 	
 
 	// Validando se existe CPF já cadastrado
-	private Tecnico findByCPF(TecnicoDTO objDTO) {
-		Tecnico obj = repository.findByCPF(objDTO.getCpf());
+	private Pessoa findByCPF(TecnicoDTO objDTO) {
+		Pessoa obj = pessoaRepository.findByCPF(objDTO.getCpf());
 		if (obj != null) {
 			return obj;
 		}
