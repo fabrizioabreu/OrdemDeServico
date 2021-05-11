@@ -48,7 +48,7 @@ public class TecnicoController {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@PostMapping
+	@PostMapping		// localhost:8080/tecnicos
 	public ResponseEntity<TecnicoDTO> create(@RequestBody TecnicoDTO objDTO) {
 		Tecnico newObj = service.create(objDTO);
 		

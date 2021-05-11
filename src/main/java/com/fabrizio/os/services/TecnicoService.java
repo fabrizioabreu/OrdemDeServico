@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.fabrizio.os.domain.Tecnico;
 import com.fabrizio.os.dtos.TecnicoDTO;
 import com.fabrizio.os.repositories.TecnicoRepository;
+import com.fabrizio.os.services.exceptions.DataIntegratyViolationException;
 import com.fabrizio.os.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -16,7 +17,7 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository repository;
-	
+
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -26,8 +27,21 @@ public class TecnicoService {
 	public List<Tecnico> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public Tecnico create(TecnicoDTO objDTO) {
+		if (findByCPF(objDTO) != null) {
+			throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
+		}
 		return repository.save(new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone()));
 	}
+
+	// Validando se existe CPF já cadastrado
+	private Tecnico findByCPF(TecnicoDTO objDTO) {
+		Tecnico obj = repository.findByCPF(objDTO.getCpf());
+		if (obj != null) {
+			return obj;
+		}
+		return null;
+	}
+
 }
