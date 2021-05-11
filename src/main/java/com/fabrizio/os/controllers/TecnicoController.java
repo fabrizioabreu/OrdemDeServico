@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,13 +29,13 @@ public class TecnicoController {
 	@Autowired
 	private TecnicoService service;
 
-	@GetMapping(value = "/{id}") // localhost:8080/tecnicos/id
+	@GetMapping(value = "/{id}") // GET localhost:8080/tecnicos/id
 	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id) {
 		TecnicoDTO objDTO = new TecnicoDTO(service.findById(id));
 		return ResponseEntity.ok().body(objDTO);
 	}
 
-	@GetMapping // localhost:8080/tecnicos
+	@GetMapping // GET localhost:8080/tecnicos
 	public ResponseEntity<List<TecnicoDTO>> findAll() {
 
 		List<TecnicoDTO> listDTO = service.findAll().stream().map(obj -> new TecnicoDTO(obj))
@@ -51,7 +52,7 @@ public class TecnicoController {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@PostMapping		// localhost:8080/tecnicos
+	@PostMapping		// POST localhost:8080/tecnicos
 	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO) {
 		Tecnico newObj = service.create(objDTO);
 		
@@ -61,10 +62,16 @@ public class TecnicoController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/{id}")	// PUT localhost:8080/tecnicos/id
 	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO objDTO) {
 		TecnicoDTO newObj = new TecnicoDTO(service.update(id, objDTO));
 		return ResponseEntity.ok().body(newObj);
+	}
+	
+	@DeleteMapping(value = "/{id}")		// DELETE localhost:8080/tecnicos/id
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
 

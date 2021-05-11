@@ -51,6 +51,13 @@ public class TecnicoService {
 		return repository.save(oldObj);
 	}
 	
+	public void delete(Integer id) {
+		Tecnico obj = findById(id);
+		if (obj.getList().size() > 0) {
+			throw new DataIntegratyViolationException("Técnico possui Ordem de servço, não pode ser deletado!");
+		}
+		repository.deleteById(id);
+	}
 	
 
 	// Validando se existe CPF já cadastrado
