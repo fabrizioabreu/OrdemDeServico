@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +51,7 @@ public class TecnicoController {
 	}
 	
 	@PostMapping		// localhost:8080/tecnicos
-	public ResponseEntity<TecnicoDTO> create(@RequestBody TecnicoDTO objDTO) {
+	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO) {
 		Tecnico newObj = service.create(objDTO);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
