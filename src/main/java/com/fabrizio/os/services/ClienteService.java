@@ -59,6 +59,15 @@ public class ClienteService {
 		return repository.save(oldObj);
 	}
 	
+	// DELETAR CLIENTE
+	public void deletar(Integer id) {
+		Cliente obj = findById(id);
+		if (obj.getList().size() > 0) {
+			throw new DataIntegratyViolationException("Pessoa possui Ordem de servico, não pode ser deletada");
+		}
+		repository.deleteById(id);
+	}
+	
 	// VALIDANDO SE EXISTE CPF CADASTRADO
 	private Pessoa findByCPF(ClienteDTO objDTO) {
 		Pessoa obj = pessoaRepository.findByCPF(objDTO.getCpf());
