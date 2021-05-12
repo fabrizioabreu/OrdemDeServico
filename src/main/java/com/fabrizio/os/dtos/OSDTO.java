@@ -3,6 +3,8 @@ package com.fabrizio.os.dtos;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.fabrizio.os.domain.OS;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,6 +20,8 @@ public class OSDTO implements Serializable{
 	private LocalDateTime dataFechamento;
 	
 	private Integer prioridade;
+	
+	@NotEmpty(message = "O campo OBSERVAÇÕES é requerido")
 	private String observacoes;
 	private Integer status;
 	private Integer tecnico;
