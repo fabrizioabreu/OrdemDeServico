@@ -3,6 +3,8 @@ package com.fabrizio.os.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,20 @@ public class ClienteService {
 			throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
 		}
 		return repository.save(new Cliente(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone()));
+	}
+	
+	// ATUALIZANDO CLIENTE
+	public Cliente update(Integer id, @Valid ClienteDTO objDTO) {
+		Cliente oldObj = findById(id);
+		if (findByCPF(objDTO) != null && findByCPF(objDTO).getId() != id) {
+			throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
+		}
+		
+		oldObj.setNome(objDTO.getNome());
+		oldObj.setCpf(objDTO.getCpf());
+		oldObj.setTelefone(objDTO.getTelefone());
+		
+		return repository.save(oldObj);
 	}
 	
 	// VALIDANDO SE EXISTE CPF CADASTRADO
