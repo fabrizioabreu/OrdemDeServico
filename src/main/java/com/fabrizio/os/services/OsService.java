@@ -1,5 +1,6 @@
 package com.fabrizio.os.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,10 @@ public class OsService {
 		Optional<OS> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! ID: " + id + ", Tipo: " + OS.class.getName()));
+	}
+	
+	// BUSCAR TODOS
+	public List<OS> findAll() {
+		return repository.findAll();
 	}
 }

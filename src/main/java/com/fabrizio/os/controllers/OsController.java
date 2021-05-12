@@ -1,5 +1,8 @@
 package com.fabrizio.os.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,4 +26,17 @@ public class OsController {
 		OSDTO obj = new OSDTO(service.findById(id));
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	// BUSCAR TODOS
+	@GetMapping		// GET localhost:8080/os/
+	public ResponseEntity<List<OSDTO>> findAll() {
+		List<OSDTO> list = service.findAll().stream().map(obj -> new OSDTO(obj))
+				.collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
+	}
 }
+
+
+
+
+
