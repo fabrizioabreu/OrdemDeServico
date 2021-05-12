@@ -1,5 +1,6 @@
 package com.fabrizio.os.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +25,7 @@ public class ClienteService {
 				"Objeto não entcontrado! ID: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
+	public List<Cliente> findAll() {
+		return repository.findAll();
+	}
 }
