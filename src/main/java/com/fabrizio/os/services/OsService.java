@@ -1,5 +1,6 @@
 package com.fabrizio.os.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,13 @@ public class OsService {
 		return fromDTO(obj);
 	}
 	
+	// ATUALIZANDO OS
+	public OS update(@Valid OSDTO obj) {
+		findById(obj.getId());
+		return fromDTO(obj);
+	}
+	  
+	// Instancia nova OS setando os novos valores
 	private OS fromDTO(OSDTO obj) {
 		OS newObj = new OS();
 		newObj.setId(obj.getId());
@@ -59,8 +67,18 @@ public class OsService {
 		newObj.setTecnico(tec);
 		newObj.setCliente(cli);
 		
+		// Validando se Status == ENCERRADO
+		if (newObj.getStatus().getCod().equals(2)) {
+			newObj.setDataFechamento(LocalDateTime.now());
+		}
+		
 		return repository.save(newObj);
 	}
+
+	
+	
+	
+	
 }
 
 
