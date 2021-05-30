@@ -6,6 +6,7 @@
 # Sobre o projeto
 
 Uma aplicação full stack web construída com Java Spring Boot + Angular e hospedado no Heroku.
+	[Repositório Front](https://github.com/fabrizioabreu/OrdemDeServico-Front).
 
  A aplicação consiste em um sistema de Ordem se Serviço, onde temos os Técnicos, Clientes e suas respectivas Ordens.
  
